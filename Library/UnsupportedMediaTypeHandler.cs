@@ -21,7 +21,6 @@
 
             var formatters = request.GetConfiguration().Formatters;
             var contentType = request.Content.Headers.ContentType;
-            var empty = contentType == null;
             Func<HttpResponseMessage> unsupportedMediaType =
                 () => new HttpResponseMessage(HttpStatusCode.UnsupportedMediaType);
 

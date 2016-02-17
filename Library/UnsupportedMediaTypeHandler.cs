@@ -21,10 +21,11 @@
 
             var formatters = request.GetConfiguration().Formatters;
             var contentType = request.Content.Headers.ContentType;
+            var empty = contentType == null;
             Func<HttpResponseMessage> unsupportedMediaType =
                 () => new HttpResponseMessage(HttpStatusCode.UnsupportedMediaType);
 
-            return formatters.Any(f => f.SupportedMediaTypes.Contains(contentType)) ?
+            return contentType == null || formatters.Any(f => f.SupportedMediaTypes.Contains(contentType)) ?
                 base.SendAsync(request, cancellationToken) :
                 Task<HttpResponseMessage>.Factory.StartNew(unsupportedMediaType);
         }
